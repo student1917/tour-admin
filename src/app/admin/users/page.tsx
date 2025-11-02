@@ -28,18 +28,18 @@ const UsersPage = () => {
   return (
     <div className="flex flex-col my-12 mx-6">
       <div id="title">
-        <h1>QUẢN LÝ NGƯỜI DÙNG</h1>
+        <h1>Users Management</h1>
         <div className="flex justify-between items-end ">
           <div id="group__1" className='flex mt-2'>
             <h4 className='text-(--primary)'>Admin</h4>
             <i className="ri-arrow-right-s-line"></i>
-            <h4>QUẢN LÝ NGƯỜI DÙNG</h4>
+            <h4>Users Management</h4>
           </div>
         </div>
       </div>
 
       <SearchBar 
-        placeholder='Tìm kiếm tài khoản...'
+        placeholder='Search users...'
         onSearch={()=>{}}
         filterSlot={
           <FilterDropdown

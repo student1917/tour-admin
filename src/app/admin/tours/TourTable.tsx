@@ -120,7 +120,7 @@ export function TourTable({ data, total, pagination, onPaginationChange, refetch
         const tour = row.original
         return (
           <div className="flex gap-2">
-            <button onClick={() => router.push(`/admin/tours/${tour._id}`)} className="text-[#667085]"><i className="ri-eye-line"></i></button>
+            {/* <button onClick={() => router.push(`/admin/tours/${tour._id}`)} className="text-[#667085]"><i className="ri-eye-line"></i></button> */}
             <button onClick={() => router.push(`/admin/tours/addTour?id=${tour._id}`)} className="text-[#667085]"><i className="ri-pencil-line"></i></button>
             <button  onClick={()=> {setIsShowDeletePopup(true); setDeletingId(tour._id)}} className="text-[#667085]"><i className="ri-delete-bin-6-line"></i></button>
           </div>

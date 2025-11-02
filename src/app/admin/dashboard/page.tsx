@@ -2,7 +2,7 @@
 import React, {useRef } from "react";
 import {IoTrendingUp } from "react-icons/io5";
 import CategoryChart from './CategoryChart';
-import TopPlaceChart from './TopPlaceChart';
+import TopPlaceChart from './TotalRevenueChart';
 import MonthlyLineChart from './MonthlyUserData';
 import {users } from '@/app/assets/data/user';
 import dynamic from "next/dynamic";
@@ -10,8 +10,8 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import AnimatedNumber from '../AnimatedNumber'
 import { useQuery } from "@tanstack/react-query";
-import { getVisitStats } from "@/services/dashboardService";
-import { VisitStats } from "@/types/dashboard";
+import { getVisitStats, getVisitStatsSummary } from "@/services/dashboardService";
+import { VisitStatsSummary } from "@/types/dashboard";
 
 const Slider = dynamic(() => import("react-slick"), { ssr: false }) as any;
 
@@ -55,9 +55,9 @@ const Page = () => {
       
     };
 
-  const {data, isLoading, error} = useQuery<VisitStats>({
+  const {data, isLoading, error} = useQuery<VisitStatsSummary>({
     queryKey: ["visitStats"],
-    queryFn: getVisitStats,
+    queryFn: getVisitStatsSummary,
   });
   if (isLoading) return <p>Loading...</p>;
   if (error || !data) return <p>Error loading stats</p>;
@@ -65,7 +65,7 @@ const Page = () => {
   return <>
     <div className="flex flex-col xl:w-[90%] mx-auto ">
       <div className="flex gap-2 justify-end mt-6">
-        <h4>hhh</h4>
+        <h4>Admin</h4>
         <img src="https://i.pinimg.com/736x/88/fb/12/88fb12fe971a35a0ad5ed2ea1dafcad0.jpg" alt="" 
         className='rounded-lg h-5 w-5'/>
         <i className="ri-arrow-down-s-fill"></i>
@@ -75,8 +75,7 @@ const Page = () => {
         <div className="flex flex-col rounded-2xl py-6 px-2 lg:p-6  gap-2 bg-[#EDEEFC] ">
           <h4 className="text-sm lg:text-base font-bold text-center">Tours</h4>
           <div className="flex flex-col lg:flex-row gap-2 items-center justify-center">
-            <AnimatedNumber value={7265} />
-            {/* <span className="text-xs flex">+11.01%  <IoTrendingUp /></span> */}
+            <AnimatedNumber value={data.totalTours} />
 
           </div>
         </div>
@@ -85,7 +84,6 @@ const Page = () => {
           <h4 className="text-sm lg:text-base font-bold text-center">Visits</h4>
           <div className="flex flex-col lg:flex-row gap-2 items-center justify-center">
              <AnimatedNumber value={data.totalVisits} />
-             {/* <span className="text-xs flex">+11.01%  <IoTrendingUp /></span> */}
 
           </div>
         </div>
@@ -93,8 +91,7 @@ const Page = () => {
         <div className="flex flex-col rounded-2xl py-6 px-1 lg:p-6  gap-2 bg-[#EDEEFC]">
           <h4 className="text-sm lg:text-base font-bold text-center">Users</h4>
           <div className="flex flex-col lg:flex-row gap-2 items-center justify-center">
-            <AnimatedNumber value={7265} />
-            {/* <span className="text-xs flex">+11.01%  <IoTrendingUp /></span> */}
+            <AnimatedNumber value={data.totalUsers} />
     
           </div>
         </div>
@@ -102,8 +99,7 @@ const Page = () => {
         <div className="flex flex-col rounded-2xl py-6 px-2 lg:p-6 gap-2 bg-[#E6F1FD]">
           <h4 className="text-sm lg:text-base font-bold text-center">Reviews</h4>
           <div className="flex flex-col lg:flex-row gap-2 items-center justify-center">
-            <AnimatedNumber value={7265} />
-            {/* <span className="text-xs flex">+11.01%  <IoTrendingUp /></span> */}
+            <AnimatedNumber value={data.totalReviews} />
            
           </div>
         </div>
@@ -122,7 +118,7 @@ const Page = () => {
           <MonthlyLineChart/>
         </div>
       </div>
-
+{/* 
       <div className="grid grid-cols-2 flex gap-8  mt-8 mx-6 ">
         <div className="flex flex-col w-full justify-center">
           <h2 className="text-[#343C6A]">TOP 5 NGƯỜI DÙNG NỔI BẬT</h2>
@@ -163,7 +159,7 @@ const Page = () => {
               </button>  
             </div>
           </div>
-      </div>
+      </div> */}
     </div>
   </>
 }

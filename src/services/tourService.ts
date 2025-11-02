@@ -41,6 +41,13 @@ export async function getVisibleTours(pageIndex: number, pageSize: number): Prom
     total: res.data.total, 
   }
 }
+
+export async function searchToursByName(name: string): Promise<Tour[]> {
+  const res = await api.get(`/tours/search/getTourBySearch?country=${encodeURIComponent(name)}`);
+  return res.data.data;
+}
+
+
 export const uploadImages = async (files: File[]): Promise<{ images: { url: string; public_id: string }[] }> => {
   const formData = new FormData();
   files.forEach(file => formData.append('images', file));

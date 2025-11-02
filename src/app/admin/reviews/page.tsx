@@ -29,23 +29,23 @@ const Page = () => {
 
       <div className="flex flex-col my-12 mx-6">
         <div id="title">
-          <h3>QUẢN LÝ ĐÁNH GIÁ, BÌNH LUẬN</h3>
+          <h3>Reviews Management</h3>
           <div className="flex justify-between items-end ">
             <div id="group__1" className='flex'>
-              <h5>Admin</h5>
+              <h5 className='text-(--primary)'>Admin</h5>
               <i className="ri-arrow-right-s-line"></i>
-              <h5>QUẢN LÝ ĐÁNH GIÁ, BÌNH LUẬN</h5>
+              <h5>Reviews Management</h5>
             </div>
 
           </div>
         </div>
 
         <SearchBar 
-          placeholder = 'Tìm kiếm reviews....'
+          placeholder = 'Search reviews....'
           onSearch = {()=>{}}
           filterSlot={
             <FilterDropdown
-            options={['Trạng thái đã duyệt','Trạng thái chưa duyệt', 'Mới nhất', 'Cũ nhất' ]}
+            options={['Approved Status','Pending Approval Status', 'Newest', 'Oldest' ]}
             value={filter}
             onChange={setFilter}/>
           }

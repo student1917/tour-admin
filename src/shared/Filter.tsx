@@ -14,15 +14,15 @@ export default function FilterDropdown({ options, value, onChange }: FilterDropd
     <Popover className="relative">
       {({ open }) => (
         <>
-          {/* Nút bấm */}
+          {/* Button */}
           <Popover.Button className="flex gap-2 border border-gray-200 rounded-md py-2 px-3 items-center bg-white shadow-sm">
-            <span>{value || "Bộ lọc"}</span>
+            <span>{value || "Filter"}</span>
             <ChevronDownIcon
               className={`w-4 h-4 transition-transform ${open ? "rotate-180" : ""}`}
             />
           </Popover.Button>
 
-          {/* Menu xổ xuống */}
+          {/* Dropdown Menu */}
           <Transition
             as={Fragment}
             enter="transition ease-out duration-150"
@@ -33,7 +33,7 @@ export default function FilterDropdown({ options, value, onChange }: FilterDropd
             leaveTo="opacity-0 translate-y-1"
           >
             <Popover.Panel className="absolute right-0 mt-2 w-48 rounded-lg bg-white shadow-lg ring-1 ring-black/5 z-50">
-                <p className="text-[#848484] text-xs px-4 pt-1">Lọc theo</p>
+                <p className="text-[#848484] text-xs px-4 pt-1">Filter by</p>
               <div className="py-1">
                 {options.map((opt, idx) => (
                   <button

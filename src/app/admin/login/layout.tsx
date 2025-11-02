@@ -1,9 +1,6 @@
-// src/app/admin/login/layout.tsx
-"use client"; // Bắt buộc vì dùng Provider
-
+"use client"; 
 import { Provider } from 'react-redux';
 import { store } from '@/app/admin/store/store';
-import SlideshowLayout from '@/components/ui/SlideshowLayout';
 import React from 'react';
 
 export default function AdminLoginLayout({
@@ -13,7 +10,7 @@ export default function AdminLoginLayout({
 }) {
   return (
     <Provider store={store}>
-      <SlideshowLayout>{children}</SlideshowLayout>
+      {children}
     </Provider>
   );
 }

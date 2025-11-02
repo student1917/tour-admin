@@ -80,7 +80,7 @@ export function BookingTable({ data, total, pagination, onPaginationChange }: Pr
         //   },
         // },
         {
-          header: 'Trạng thái',
+          header: 'Status',
           accessorKey: 'status',
           cell: ({ getValue }) => {
             type Status = 'pending' | 'confirmed' | 'cancelled' | 'paid';
@@ -100,9 +100,9 @@ export function BookingTable({ data, total, pagination, onPaginationChange }: Pr
           cell: () => {
             return (
               <div className="flex gap-2">
-                <button className="text-[#667085]"><i className="ri-eye-line"></i></button>
-                <button className="text-[#667085]"><i className="ri-pencil-line"></i></button>
-                <button className="text-[#667085]"><i className="ri-delete-bin-6-line"></i></button>
+                {/* <button className="text-[#667085]"><i className="ri-eye-line"></i></button> */}
+                {/* <button className="text-[#667085]"><i className="ri-pencil-line"></i></button> */}
+                {/* <button className="text-[#667085]"><i className="ri-delete-bin-6-line"></i></button> */}
               </div>
             );
           },

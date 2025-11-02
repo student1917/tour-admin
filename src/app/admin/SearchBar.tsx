@@ -10,12 +10,16 @@ interface SearchBarProps {
 
 const SearchBar = ({ placeholder = '', onSearch, filterSlot }: SearchBarProps) => {
 
-    const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
-      if (event.key === 'Enter') {
-        const target = event.target as HTMLInputElement;
-        onSearch?.(target.value);
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter") {
+      const value = (event.target as HTMLInputElement).value.trim();
+      if (value) {
+        onSearch?.(value);
+      } else {
+        onSearch?.(""); 
       }
     }
+  };
 
   return (
     <>

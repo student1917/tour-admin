@@ -73,7 +73,7 @@ export function UserTable({ data, total, pagination, onPaginationChange, refetch
       ),
     },
     {
-      header: 'Tên Tài khoản',
+      header: 'Username',
       accessorKey: 'username',
       cell: ({ row }) => {
         const user = row.original;
@@ -94,7 +94,7 @@ export function UserTable({ data, total, pagination, onPaginationChange, refetch
       accessorKey: 'email',
     },
     {
-      header: 'Ngày tạo',
+      header: 'Created At',
       accessorKey: 'createdAt',
       cell: ({ getValue }) => {
         const date = new Date(getValue() as string)
@@ -108,8 +108,8 @@ export function UserTable({ data, total, pagination, onPaginationChange, refetch
         const user = row.original;
         return (
           <div className="flex gap-2">
-            <button onClick={() => router.push(`users/${user._id}`)}><i className="ri-eye-line"></i></button>
-            <button><i className="ri-pencil-line"></i></button>
+            {/* <button onClick={() => router.push(`users/${user._id}`)}><i className="ri-eye-line"></i></button> */}
+            {/* <button><i className="ri-pencil-line"></i></button> */}
             <button onClick={()=> {setIsShowDeletePopup(true); setDeletingId(user._id)}}><i className="ri-delete-bin-6-line"></i></button>
           </div>
         )

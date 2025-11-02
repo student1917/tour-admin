@@ -1,114 +1,99 @@
-// src/app/auth/login/page.tsx
 "use client";
 import React, { useEffect, useState } from "react";
-import Input from "@/components/ui/Input";
-import Button from "@/components/ui/Button";
-import { FiEye, FiEyeOff } from "react-icons/fi";
-import { useDispatch } from 'react-redux';
-import { useSearchParams } from "next/navigation";
-import { login as loginAction } from '@/app/admin/store/authSlice';
-import { useRouter } from 'next/navigation';
+import { useDispatch } from "react-redux";
+import { useSearchParams, useRouter } from "next/navigation";
+import { login as loginAction } from "@/app/admin/store/authSlice";
 import { BASE_URL } from "../utils/config";
 import api from "@/services/api";
-
+import Image from "next/image";
 
 export default function LoginPage() {
-
   const dispatch = useDispatch();
-  const searchParams = useSearchParams()
-  const router = useRouter()
+  const searchParams = useSearchParams();
+  const router = useRouter();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
+  useEffect(() => {
+    const prefillEmail = searchParams.get("email");
+    if (prefillEmail) setEmail(prefillEmail);
+  }, [searchParams]);
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log("Login data:", { email, password });
-  };
-
-  useEffect(()=> {
-    const prefillEmail = searchParams.get('email')
-    if (prefillEmail) setEmail(prefillEmail)
-  },[searchParams])
-
-  
-  const handleLogin = async() => {
-
-    if (!email || !password)
-        return alert('Vui lòng nhập đầy đủ thông tin');
+  const handleLogin = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (!email || !password) return alert("Please enter all required fields.");
 
     try {
-        const res = await api.post(`${BASE_URL}/users/login`, { email, password });
-        const { accessToken, refreshToken, user } = res.data;
+      const res = await api.post(`${BASE_URL}/auth/login`, { email, password });
+      const { accessToken, data, role } = res.data;
 
-        if (typeof window !== 'undefined') {
-            localStorage.setItem('accessToken', accessToken);
-            localStorage.setItem('refreshToken', refreshToken);
-        }
+      if (typeof window !== "undefined") {
+        localStorage.setItem("accessToken", accessToken);
+      }
 
-        if (user.role !== 'admin') {
-            alert('Bạn không có quyền truy cập admin');
-            return;
-        }
+      if (role !== "admin") {
+        alert("You do not have permission to access the admin dashboard.");
+        return;
+      }
 
-        dispatch(loginAction({accessToken:accessToken, refreshToken:refreshToken}))
-        alert('Login sucessfullly')
-        router.push('/admin/dashboard')        
-
+      dispatch(loginAction({ accessToken }));
+      alert("Login successfully!");
+      router.push("/admin/dashboard");
     } catch (err) {
-        alert('Failed to login')
-        console.log(err)
+      console.error(err);
+      alert("Failed to log in. Please check your credentials.");
     }
-  }
+  };
 
-  return (
-    <>
-      <h2 className="heading-2 font-bold text-[var(--secondary)] mb-1">ĐĂNG NHẬP QUẢN TRỊ</h2>
-      <p className="text-sm text-gray-600 mb-5">Đăng nhập tài khoản Admin</p>
 
-      <form onSubmit={handleSubmit} className="space-y-5 pt-5">
-        <Input
-          type="email"
-          label="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
+  return <>
+  <div className="flex justify-center items-center min-h-screen">
+    <div className="flex w-[60%] h-[50%] bg-white rounded-2xl shadow-lg overflow-hidden mx-auto items-center justify-center">
+      {/* Left image */}
+      <div className="hidden md:block w-1/2">
+        <img
+          src="https://i.pinimg.com/736x/55/46/94/554694bd7f04790c18110fcd03345428.jpg"
+          alt="Login"
+          className="object-cover w-full h-full"
         />
-        <div className="relative">
-          <Input
-            type={showPassword ? "text" : "password"}
-            label="Mật khẩu"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-          <button
-            type="button"
-            onClick={() => setShowPassword(!showPassword)}
-            className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
-          >
-            {showPassword ? <FiEyeOff size={20} /> : <FiEye size={20} />}
-          </button>
-        </div>
+      </div>
+      {/* Right form */}
+       <div className="w-full md:w-1/2 p-8 flex flex-col justify-center items-center">
+              <div className="flex flex-col items-center mb-6">
+                <img src="https://i.pinimg.com/1200x/53/c3/6f/53c36f19e82b4366b680d309972f3bd3.jpg" alt="User" 
+                className="h-20 w-20 object-cover rounded-full" />
+                <h4 className="text-2xl font-semibold text-gray-800 mt-3">Login to use Travel World Admin</h4>
+              </div>
 
-        <div className="flex items-center justify-between text-sm">
-          <label className="relative inline-flex items-center cursor-pointer">
-            <input type="checkbox" className="sr-only peer" />
-            <div className="w-9 h-5 bg-gray-200 rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[var(--primary)]" />
-            <span className="ml-2 text-sm text-gray-900">Ghi nhớ mật khẩu</span>
-          </label>
-
-          <a href="/auth/forgot-password" className="text-[var(--primary)] hover:underline">
-            Quên mật khẩu?
-          </a>
-        </div>
-
-        <Button onClick={handleLogin} type="submit" variant="primary" className="w-full mt-4">
-          ĐĂNG NHẬP
-        </Button>
-      </form>
-    </>
-  );
-}
+              <form onSubmit={handleLogin} className="w-full space-y-4">
+                <input
+                  type="email"
+                  placeholder="Email"
+                  required
+                  id="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400"
+                />
+                <input
+                  type="password"
+                  placeholder="Password"
+                  required
+                  id="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400"
+                />
+                <button
+                  type="submit"
+                  className="w-full bg-gray-500 text-white py-2 rounded-lg hover:bg-indigo-700 transition duration-200"
+                >
+                  Login 
+                </button>
+              </form>
+            </div>
+    </div>
+  </div>
+  </>

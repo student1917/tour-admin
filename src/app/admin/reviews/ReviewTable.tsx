@@ -101,7 +101,7 @@ export function ReviewTable({ data, total, pagination, onPaginationChange, refet
           }
         },
         {
-          header: 'Ngày đăng',
+          header: 'Created At',
           accessorKey: 'createdAt',
           cell: ({ getValue }) => {
             const date = new Date(getValue() as string)
@@ -115,8 +115,8 @@ export function ReviewTable({ data, total, pagination, onPaginationChange, refet
             const review = row.original;
             return (
               <div className="flex gap-2">
-                <button className="text-[#667085]"><i className="ri-eye-line"></i></button>
-                <button className="text-[#667085]"><i className="ri-pencil-line"></i></button>
+                {/* <button className="text-[#667085]"><i className="ri-eye-line"></i></button> */}
+                {/* <button className="text-[#667085]"><i className="ri-pencil-line"></i></button> */}
                 <button onClick={() => { setIsShowDeletePopup(true); setDeletingId(review._id); }} className="text-[#667085]"><i className="ri-delete-bin-6-line"></i></button>
               </div>
             );

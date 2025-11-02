@@ -40,4 +40,15 @@ const api = axios.create({
 //     }
 // )
 
+api.interceptors.response.use(
+  (res) => res,
+  async (error) => {
+    if (error.response?.status === 401) {
+      console.warn("Unauthorized - user must log in again");
+      window.location.href = "/admin/login";
+    }
+    return Promise.reject(error);
+  }
+);
+
 export default api;

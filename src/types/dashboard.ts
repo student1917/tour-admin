@@ -9,3 +9,15 @@ export interface VisitStats {
   todayVisits: number;
   topTours: TopTour[];
 }
+
+export interface VisitStatsSummary {
+  totalVisits: number;
+  totalUsers: number;
+  totalReviews: number;
+  totalTours:number;
+}
+
+export interface MonthlyRevenue {
+  month: number;
+  totalRevenue: number;
+}
